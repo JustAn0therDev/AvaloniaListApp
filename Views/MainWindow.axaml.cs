@@ -2,13 +2,12 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Layout;
-using CommunityToolkit.Mvvm.Input;
 
 namespace AvaloniaListApp.Views;
 
 public partial class MainWindow : Window
 {
-    private string _todoItemTextFormat = "- {0}";
+    private const string _todoItemTextFormat = "- {0}";
 
     private int _amountOfTodoItemsOnScreen = 0;
 
