@@ -20,28 +20,23 @@
             <TextBlock Margin="5"
                        FontSize="24" 
                        HorizontalAlignment="Center"
-                       Text="{Binding FahrenheitLabel}">
+                       Text="Todo List">
             </TextBlock>
         </Border>
         <Grid Margin="5" ColumnDefinitions="120, 100" RowDefinitions="Auto, Auto, Auto" HorizontalAlignment="Center">
-            <Label>Celsius</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Margin="0 5" Text="0" Name="Celsius"/> 
+            <Label VerticalAlignment="Center">Todo Item</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="0 5" Name="TodoItemTextBox"/> 
             <Label Grid.Row="0" Grid.Column="1"/>
-            <Label Grid.Row="1" Grid.Column="0">Fahrenheit</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Margin="0 5" Text="0" Name="Fahrenheit"/>
-            <Label Grid.Row="1" Grid.Column="1"/>
         </Grid>
         <Button 
             HorizontalAlignment="Center" 
-            Command="{Binding SetFahenheitLabelCommand}" 
-            Content="{Binding FahrenheitLabel}"
-            Name="ToFarenheitButton" 
-            Click="CalculateToFahrenheit"/>
-        <Button 
-            HorizontalAlignment="Center" 
-            Content="Convert to Celsius" 
-            Name="ToCelsiusButton" 
-            Click="CalculateToCelsius"/>
+            Content="Add Item" 
+            Name="ToCelsiusButton"
+            Click="AddTodoItem"/>
+        
+        <StackPanel HorizontalAlignment="Center" Margin="20" Name="TodoList">
+            
+        </StackPanel>
     </StackPanel>
 
 </Window>

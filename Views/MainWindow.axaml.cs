@@ -1,54 +1,51 @@
-using System.Diagnostics;
+using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AvaloniaListApp.Views;
 
 public partial class MainWindow : Window
 {
-    private string _messageFormat = "Clicked me {0} times!";
-    private int _clickCount = 0;
-    
+    private string _todoItemTextFormat = "- {0}";
+
+    private int _amountOfTodoItemsOnScreen = 0;
+
     public MainWindow()
     {
         InitializeComponent();
     }
-    
-    private void CalculateToCelsius(object? sender, RoutedEventArgs e)
+
+    private void AddTodoItem(object? sender, RoutedEventArgs e)
     {
-        ConvertFahrenheitToCelsius();
+        _amountOfTodoItemsOnScreen++;
+        TextBlock textBlock = new()
+        {
+            Text = string.Format(_todoItemTextFormat, TodoItemTextBox.Text),
+        };
+        Button button = new()
+        {
+            Content = "Done",
+        };
+        StackPanel stackPanel = new()
+        {
+            Children = { textBlock, button },
+            Orientation = Orientation.Horizontal,
+            Name = $"Stack{_amountOfTodoItemsOnScreen}"
+        };
+        button.Click += RemoveTodoItem;
+        TodoList.Children.Add(stackPanel);
     }
 
-    private void CalculateToFahrenheit(object? sender, RoutedEventArgs e)
+    private void RemoveTodoItem(object? sender, RoutedEventArgs e)
     {
-        ConvertCelsiusToFahrenheit();
-    }
+        StackPanel? stackPanel =
+            (StackPanel?)TodoList.Children.FirstOrDefault(f => f.Name == ((Button?)sender)?.Parent?.Name);
 
-    private void ConvertCelsiusToFahrenheit()
-    {
-        if (double.TryParse(Celsius.Text, out double celsius))
+        if (stackPanel is not null)
         {
-            var fahrenheit = celsius * 9 / 5 + 32;
-            Fahrenheit.Text = fahrenheit.ToString("0.0");
-        }
-        else
-        {
-            Celsius.Text = "0";
-            Fahrenheit.Text = "0";
-        }
-    }
-
-    private void ConvertFahrenheitToCelsius()
-    {
-        if (double.TryParse(Fahrenheit.Text, out double fahrenheit))
-        {
-            var celsius = (fahrenheit - 32) * 5/9;
-            Celsius.Text = celsius.ToString("0.0");
-        }
-        else
-        {
-            Celsius.Text = "0";
-            Fahrenheit.Text = "0";
+            TodoList.Children.Remove(stackPanel);
         }
     }
 }
